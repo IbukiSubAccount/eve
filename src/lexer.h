@@ -22,3 +22,11 @@ void lexer_advance(lexer_T* lexer) // move pointer to the next character in the 
         lexer->c = lexer->contents[lexer->i];
     }
 }
+
+void lexer_skip_whitespace(lexer_T* lexer) // skip the white space.
+{
+    while (lexer->c == ' ' || lexer->c == 10) // skip space and new line. by the way, 10 is the code of the new line.
+    {
+        lexer_advance(lexer);
+    }
+}

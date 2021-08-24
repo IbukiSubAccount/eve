@@ -99,3 +99,10 @@ token_T* lexer_collect_id(lexer_T* lexer) // define how to parse id.
 
     return init_token(TOKEN_ID, value);
 }
+
+token_T* lexer_advance_with_token(lexer_T* lexer, token_T* token)
+{
+    lexer_advance(lexer);
+
+    return token;
+}

@@ -30,3 +30,32 @@ void lexer_skip_whitespace(lexer_T* lexer) // skip the white space.
         lexer_advance(lexer);
     }
 }
+
+token_T* lexer_get_next_token(lexer_T* lexer) // call this function to get the next token in the contents.
+{
+    while (lexer->c != '\0' && lexer->i < strlen(lexer->contents)) // if still have characters to parse continue.
+    {
+        if (lexer->c == ' ' || lexer->c == 10)
+            lexer_skip_whitespace(lexer);
+
+        if (isalnum(lexer->c))
+            return lexer_collect_id(lexer);
+
+        if (lexer->c == '"')
+        {
+            return lexer_collect_string(lexer);
+        }
+
+        switch (lexer->c) // switching characters.
+        {
+            case '=': return lexer_advance_with_token(lexer, init_token(TOKEN_EQUALS, lexer_get_current_char_as_string(lexer))); break;
+            case ';': return lexer_advance_with_token(lexer, init_token(TOKEN_SEMI, lexer_get_current_char_as_string(lexer))); break;
+            case '(': return lexer_advance_with_token(lexer, init_token(TOKEN_LPAREN, lexer_get_current_char_as_string(lexer))); break;
+            case ')': return lexer_advance_with_token(lexer, init_token(TOKEN_RPAREN, lexer_get_current_char_as_string(lexer))); break;
+        }
+    }
+
+    lexer_advance(lexer);
+
+    return (void*)0;
+}

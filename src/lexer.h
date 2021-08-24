@@ -106,3 +106,12 @@ token_T* lexer_advance_with_token(lexer_T* lexer, token_T* token)
 
     return token;
 }
+
+char* lexer_get_current_char_as_string(lexer_T* lexer) // return current character as string.
+{
+    char* str = calloc(2, sizeof(char));
+    str[0] = lexer->c;
+    str[1] = '\0';
+
+    return str;
+}

@@ -13,3 +13,12 @@ lexer_T* init_lexer(char* contents) // init lexer.
 
     return lexer;
 }
+
+void lexer_advance(lexer_T* lexer) // move pointer to the next character in the content.
+{
+    if (lexer->c != '\0' && lexer->i < strlen(lexer->contents))
+    {
+        lexer->i += 1;
+        lexer->c = lexer->contents[lexer->i];
+    }
+}

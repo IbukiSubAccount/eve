@@ -34,7 +34,10 @@ AST_T* parser_parse(parser_T* parser) // main entry point of the parser. return 
 
 AST_T* parser_parse_statement(parser_T* parser) // parsing single statement
 {
-
+    switch (parser->token->type)
+    {
+        case TOKEN_ID: return parser_parse_id(parser);
+    }
 }
 
 AST_T* parser_parse_statements(parser_T* parser) // parsing list of statement
@@ -84,6 +87,11 @@ AST_T* parser_parse_function_call(parser_T* parser) // return AST node type of f
 
 }
 
+AST_T* parser_parse_variable_definition(parser_T* parser)
+{
+    
+}
+
 AST_T* parser_parse_variable(parser_T* parser) // return AST node type of variable
 {
 
@@ -91,4 +99,16 @@ AST_T* parser_parse_variable(parser_T* parser) // return AST node type of variab
 
 AST_T* parser_parse_string(parser_T* parser) // return AST node type of string{
 {
+}
+
+AST_T* parser_parse_id(parser_T* parser)
+{
+    if (strcmp(parser->current_token->value, "v") == 0)
+    {
+        return parser_parse_variable_definition(parser);
+    }
+    else
+    {
+        return parser_parse_variable(parser);
+    }
 }

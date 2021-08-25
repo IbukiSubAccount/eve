@@ -1,2 +1,2 @@
 v name = "Ibuki Yoshida";
-print(name);
+eve(name);

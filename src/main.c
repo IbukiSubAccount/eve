@@ -5,7 +5,7 @@ int main(int argc, char* argv[])
 {
     lexer_T* lexer = init_lexer(
         "v name = \"Ibuki Yoshida\";\n"
-        "print(name);\n"
+        "eve(name);\n"
     );
 
     token_T* token = (void*)0;

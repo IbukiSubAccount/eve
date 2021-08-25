@@ -21,7 +21,7 @@ AST_T* init_ast(int type)
     ast->string_value = (void*) 0;
 
     // AST_COMPOUND
-    ast->AST_STRUCT** compound_value = (void*) 0;
+    ast->compound_value = (void*) 0;
     ast->compound_size = 0;
 
     return ast;

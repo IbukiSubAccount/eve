@@ -39,7 +39,29 @@ AST_T* parser_parse_statement(parser_T* parser) // parsing single statement
 
 AST_T* parser_parse_statements(parser_T* parser) // parsing list of statement
 {
+    AST_T* compound = init_ast(AST_COMPOUND); // create compound type ast node
+    compound->compound_value = calloc(1, sizeof(struct AST_STRUCT*));
 
+    AST_T* ast_statement = parser_parse_statement(parser);
+    compound->compound_value[0] = ast_statement;
+
+    // parse another statement if SEMI
+    while (parser->current_token->type = TOKEN_SEMI)
+    {
+        parser_eat(parser, TOKEN_SEMI);
+
+        AST_T* ast_statement = parser_parse_statement(parser); // parse another statement
+        compound->compound_size += 1; // increase the size
+
+        // realocating the memory
+        compound->compound_value = realloc(
+            compound->compound_value,
+            compound->compound_size * sizeof(struct AST_STRUCT)
+        );
+        compound->compound_value[compound->compound_size-1] = ast_statement; // put the new statement to the last statement of the list
+    }
+
+    return compound;
 }
 
 AST_T* parser_parse_expr(parser_T* parser)

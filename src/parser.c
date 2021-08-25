@@ -29,7 +29,7 @@ void parser_eat(parser_T* parser, int token_type) // get a expected token
 
 AST_T* parser_parse(parser_T* parser) // main entry point of the parser. return the whole AST tree of the entire source code when we parse.
 {
-
+    return parser_parse_statements();
 }
 
 AST_T* parser_parse_statement(parser_T* parser) // parsing single statement

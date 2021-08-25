@@ -1,5 +1,6 @@
 #include "include/parser.h"
 #include <stdio.h>
+#include <string.h>
 
 parser_T* init_parser(lexer_T* lexer)
 {
@@ -29,12 +30,12 @@ void parser_eat(parser_T* parser, int token_type) // get a expected token
 
 AST_T* parser_parse(parser_T* parser) // main entry point of the parser. return the whole AST tree of the entire source code when we parse.
 {
-    return parser_parse_statements();
+    return parser_parse_statements(parser);
 }
 
 AST_T* parser_parse_statement(parser_T* parser) // parsing single statement
 {
-    switch (parser->token->type)
+    switch (parser->current_token->type)
     {
         case TOKEN_ID: return parser_parse_id(parser);
     }
@@ -49,7 +50,7 @@ AST_T* parser_parse_statements(parser_T* parser) // parsing list of statement
     compound->compound_value[0] = ast_statement;
 
     // parse another statement if SEMI
-    while (parser->current_token->type = TOKEN_SEMI)
+    while (parser->current_token->type == TOKEN_SEMI)
     {
         parser_eat(parser, TOKEN_SEMI);
 
@@ -89,7 +90,17 @@ AST_T* parser_parse_function_call(parser_T* parser) // return AST node type of f
 
 AST_T* parser_parse_variable_definition(parser_T* parser)
 {
-    
+    parser_eat(parser, TOKEN_ID); // expecting v
+    char * variable_definition_variable_name = parser->current_token->value;
+    parser_eat(parser, TOKEN_ID); // expecting v name
+    parser_eat(parser, TOKEN_EQUALS); // expecting equals
+    AST_T* variable_definition_value = parser_parse_expr(parser); // expecting value
+
+    AST_T* variable_definition = init_ast(AST_VARIABLE_DEFINITION); // create ast node that will return
+    variable_definition->variable_definition_variable_name = variable_definition_variable_name;
+    variable_definition->variable_definition_value = variable_definition_value;
+
+    return variable_definition;
 }
 
 AST_T* parser_parse_variable(parser_T* parser) // return AST node type of variable

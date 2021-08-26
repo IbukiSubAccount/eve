@@ -58,7 +58,7 @@ token_T* lexer_get_next_token(lexer_T* lexer) // call this function to get the n
 
     lexer_advance(lexer);
 
-    return (void*)0;
+    return init_token(TOKEN_EOF, "\0");
 }
 
 token_T* lexer_collect_string(lexer_T* lexer) // define how to parse string.

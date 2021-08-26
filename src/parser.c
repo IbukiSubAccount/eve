@@ -7,6 +7,7 @@ parser_T* init_parser(lexer_T* lexer)
     parser_T* parser = calloc(1, sizeof(struct PARSER_STRUCT));
     parser->lexer = lexer;
     parser->current_token = lexer_get_next_token(lexer);
+    token_T* prev_token = parser->current_token;
 
     return parser;
 }
@@ -15,6 +16,7 @@ void parser_eat(parser_T* parser, int token_type) // get a expected token
 {
     if (parser->current_token->type == token_type)
     {
+        parser->prev_token = parser->current_token; // save current token in the prev token
         parser->current_token = lexer_get_next_token(parser->lexer);
     }
     else
@@ -89,7 +91,33 @@ AST_T* parser_parse_term(parser_T* parser)
 
 AST_T* parser_parse_function_call(parser_T* parser) // return AST node type of function call
 {
+    AST_T* function_call = init_ast(AST_FUNCTION_CALL);
+    function_call->function_call_name = parser->prev_token->value;
 
+    function_call->function_call_arguments = calloc(1, sizeof(struct AST_STRUCT*)); // alocating memory for the function call list
+
+    AST_T* ast_expr = parser_parse_expr(parser); // parsing statement
+    function_call->function_call_arguments[0] = ast_expr; // adding the statement to the begining list
+
+    // parse another function call arguments if COMMA
+    while (parser->current_token->type == TOKEN_COMMA)
+    {
+        parser_eat(parser, TOKEN_COMMA);
+
+        AST_T* ast_expr = parser_parse_expr(parser); // parse the expressions
+        function_call->function_call_arguments_size += 1; // increase the arguments size
+
+        // realocating the memory for the function arguments list
+        function_call->function_call_arguments = realloc(
+            function_call->function_call_arguments,
+            function_call->function_call_arguments_size * sizeof(struct AST_STRUCT)
+        );
+        function_call->function_call_arguments[function_call->function_call_arguments_size-1] = ast_expr; // add the new expression to the last index of the list
+    }
+
+    // printf("%s\n", parser->prev_token->value); // printf the prev token value
+
+    return function_call;
 }
 
 AST_T* parser_parse_variable_definition(parser_T* parser)

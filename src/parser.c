@@ -119,7 +119,7 @@ AST_T* parser_parse_function_call(parser_T* parser) // return AST node type of f
         function_call->function_call_arguments[function_call->function_call_arguments_size-1] = ast_expr; // add the new expression to the last index of the list
     }
 
-    parser_eat(parser, TOKEN_LPAREN); // eat TOKEN RPAREN
+    parser_eat(parser, TOKEN_RPAREN); // eat TOKEN RPAREN
 
     // printf("%s\n", parser->prev_token->value); // printf the prev token value
 

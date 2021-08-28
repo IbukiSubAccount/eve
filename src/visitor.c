@@ -5,7 +5,7 @@
 visitor_T* init_visitor()
 {
     visitor_T* visitor = calloc(1, sizeof(struct VISITOR_STRUCT));
-    visitor->variable_definitions = calloc(1, sizeof(struct AST_STRUCT*));
+    visitor->variable_definitions = (void*) 0;
     visitor->variable_definitions_size = 0;
 
     return visitor;
@@ -53,7 +53,7 @@ AST_T* visitor_visit_compound(visitor_T* visitor, AST_T* node)
 {
     for (int i = 0; i < node->compound_size; i++)
     {
-        visitor_visit(node->compound_value[i]);
+        visitor_visit(visitor, node->compound_value[i]);
     }
 
     return init_ast(AST_NOOP);

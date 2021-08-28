@@ -2,15 +2,24 @@
 #include "include/AST.h"
 #include <stdio.h>
 
+visitor_T* init_visitor()
+{
+    visitor_T* visitor = calloc(1, sizeof(struct VISITOR_STRUCT));
+    visitor->variable_definitions = calloc(1, sizeof(struct AST_STRUCT*));
+    visitor->variable_definitions_size = 0;
+
+    return visitor;
+}
+
 AST_T* visitor_visit(visitor_T* visitor, AST_T* node)
 {
     switch (node->type)
     {
-        case AST_VARIABLE_DEFINITION: return visitor_visit_variable_definition(node); break;
-        case AST_VARIABLE: return visitor_visit_variable(node); break;
-        case AST_FUNCTION_CALL: return visitor_visit_function_call(node); break;
-        case AST_STRING: return visitor_visit_string(node); break;
-        case AST_COMPOUND: return visitor_visit_compound(node); break;
+        case AST_VARIABLE_DEFINITION: return visitor_visit_variable_definition(visitor, node); break;
+        case AST_VARIABLE: return visitor_visit_variable(visitor, node); break;
+        case AST_FUNCTION_CALL: return visitor_visit_function_call(visitor, node); break;
+        case AST_STRING: return visitor_visit_string(visitor, node); break;
+        case AST_COMPOUND: return visitor_visit_compound(visitor, node); break;
         case AST_NOOP: return node; break;
     }
 

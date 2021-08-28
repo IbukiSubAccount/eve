@@ -13,6 +13,8 @@ v name = "Ibuki Yoshida";
 eve(name);
 */
 
+visitor_T* init_visitor();
+
 AST_T* visitor_visit(visitor_T* visitor, AST_T* node); // 1. take in the root node and check the types and visit
 
 AST_T* visitor_visit_variable_definition(visitor_T* visitor, AST_T* node); // 3. visit the variabe definition

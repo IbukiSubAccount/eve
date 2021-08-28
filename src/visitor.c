@@ -15,7 +15,7 @@ AST_T* visitor_visit(AST_T* node)
     printf("Uncaught statement of type '%d'\n", node->type);
     exit(1);
 
-    return (void*) 0;
+    return init_ast(AST_NOOP);
 }
 
 AST_T* visitor_visit_variable_definition(AST_T* node)
@@ -40,4 +40,10 @@ AST_T* visitor_visit_string(AST_T* node)
 
 AST_T* visitor_visit_compound(AST_T* node)
 {
+    for (int i = 0; i < node->compound_size; i++)
+    {
+        visitor_visit(node->compound_value[i]);
+    }
+
+    return init_ast(AST_NOOP);
 }

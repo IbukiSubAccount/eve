@@ -10,6 +10,7 @@ typedef struct AST_STRUCT
         AST_FUNCTION_CALL,
         AST_STRING,
         AST_COMPOUND // list of AST nodes
+        AST_NOOP // no operation
     } type;
 
     // AST_VARIABLE_DEFINITION

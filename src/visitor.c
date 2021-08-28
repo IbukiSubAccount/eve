@@ -2,7 +2,7 @@
 #include "include/AST.h"
 #include <stdio.h>
 
-AST_T* visitor_visit(AST_T* node)
+AST_T* visitor_visit(visitor_T* visitor, AST_T* node)
 {
     switch (node->type)
     {
@@ -20,27 +20,27 @@ AST_T* visitor_visit(AST_T* node)
     return init_ast(AST_NOOP);
 }
 
-AST_T* visitor_visit_variable_definition(AST_T* node)
+AST_T* visitor_visit_variable_definition(visitor_T* visitor, AST_T* node)
 {
     printf("visitor visit variable definition\n");
 }
 
-AST_T* visitor_visit_variable(AST_T* node)
+AST_T* visitor_visit_variable(visitor_T* visitor, AST_T* node)
 {
 
 }
 
-AST_T* visitor_visit_function_call(AST_T* node)
+AST_T* visitor_visit_function_call(visitor_T* visitor, AST_T* node)
 {
 
 }
 
-AST_T* visitor_visit_string(AST_T* node)
+AST_T* visitor_visit_string(visitor_T* visitor, AST_T* node)
 {
 
 }
 
-AST_T* visitor_visit_compound(AST_T* node)
+AST_T* visitor_visit_compound(visitor_T* visitor, AST_T* node)
 {
     for (int i = 0; i < node->compound_size; i++)
     {

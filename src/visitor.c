@@ -36,7 +36,23 @@ AST_T* visitor_visit_variable_definition(visitor_T* visitor, AST_T* node)
 
 AST_T* visitor_visit_variable(visitor_T* visitor, AST_T* node)
 {
+    if (visitor->variable_definitions == (void*) 0) // if list is null
+    {
+        visitor->variable_definitions = calloc(1, sizeof(struct AST_STRUCT*)); // allocating memory
+        visitor->variable_definitions[0] = node; // put the variable definition to the first index of the list
+        visitor->variable_definitions_size += 1; // increment the size
+    }
+    else // if the list already exists
+    {
+        visitor->variable_definitions_size += 1; // increment the size
+        visitor->variable_definitions = realloc( // reallocating the memory
+            visitor->variable_definitions,
+            visitor->variable_definitions_size * sizeof(struct AST_STRUCT*)
+        );
+        visitor->variable_definitions[visitor->variable_definitions_size-1] = node; // put the node in the end of the list
+    }
 
+    return node;
 }
 
 AST_T* visitor_visit_function_call(visitor_T* visitor, AST_T* node)

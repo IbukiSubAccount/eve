@@ -1,4 +1,5 @@
 #include "include/visitor.h"
+#include "include/AST.h"
 #include <stdio.h>
 
 AST_T* visitor_visit(AST_T* node)
@@ -10,6 +11,7 @@ AST_T* visitor_visit(AST_T* node)
         case AST_FUNCTION_CALL: return visitor_visit_function_call(node); break;
         case AST_STRING: return visitor_visit_string(node); break;
         case AST_COMPOUND: return visitor_visit_compound(node); break;
+        case AST_NOOP: return node; break;
     }
 
     printf("Uncaught statement of type '%d'\n", node->type);
@@ -20,7 +22,7 @@ AST_T* visitor_visit(AST_T* node)
 
 AST_T* visitor_visit_variable_definition(AST_T* node)
 {
-
+    printf("visitor visit variable definition\n");
 }
 
 AST_T* visitor_visit_variable(AST_T* node)

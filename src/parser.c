@@ -42,6 +42,8 @@ AST_T* parser_parse_statement(parser_T* parser) // parsing single statement
         // if parser current token type is TOKEN ID, parse token id
         case TOKEN_ID: return parser_parse_id(parser);
     }
+
+    return init_ast(AST_NOOP);
 }
 
 AST_T* parser_parse_statements(parser_T* parser) // parsing list of statement
@@ -51,6 +53,7 @@ AST_T* parser_parse_statements(parser_T* parser) // parsing list of statement
 
     AST_T* ast_statement = parser_parse_statement(parser); // parsing statement
     compound->compound_value[0] = ast_statement; // adding the statement to the begining list
+    compound->compound_size += 1;
 
     // parse another statement if SEMI
     while (parser->current_token->type == TOKEN_SEMI)
@@ -58,14 +61,18 @@ AST_T* parser_parse_statements(parser_T* parser) // parsing list of statement
         parser_eat(parser, TOKEN_SEMI);
 
         AST_T* ast_statement = parser_parse_statement(parser); // parse another statement
-        compound->compound_size += 1; // increase the size
 
-        // realocating the memory
-        compound->compound_value = realloc(
-            compound->compound_value,
-            compound->compound_size * sizeof(struct AST_STRUCT)
-        );
-        compound->compound_value[compound->compound_size-1] = ast_statement; // put the new statement to the last statement of the list
+        if (ast_statement)
+        {
+            compound->compound_size += 1; // increase the size
+
+            // realocating the memory
+            compound->compound_value = realloc(
+                compound->compound_value,
+                compound->compound_size * sizeof(struct AST_STRUCT)
+            );
+            compound->compound_value[compound->compound_size-1] = ast_statement; // put the new statement to the last statement of the list
+        }
     }
 
     return compound;
@@ -78,6 +85,8 @@ AST_T* parser_parse_expr(parser_T* parser)
         case TOKEN_STRING: return parser_parse_string(parser);
         case TOKEN_ID: return parser_parse_id(parser);
     }
+
+    return init_ast(AST_NOOP);
 }
 
 AST_T* parser_parse_factor(parser_T* parser)
@@ -102,6 +111,7 @@ AST_T* parser_parse_function_call(parser_T* parser) // return AST node type of f
 
     AST_T* ast_expr = parser_parse_expr(parser); // parsing statement
     function_call->function_call_arguments[0] = ast_expr; // adding the statement to the begining list
+    function_call->function_call_arguments_size += 1;
 
     // parse another function call arguments if COMMA
     while (parser->current_token->type == TOKEN_COMMA)

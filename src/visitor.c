@@ -1,6 +1,24 @@
 #include "include/visitor.h"
 #include "include/AST.h"
 #include <stdio.h>
+#include <string.h>
+
+static AST_T* builtin_function_print(visitor_T* visitor, AST_T** args, int args_size)
+{
+    for (int i = 0; i < args_size; i++)
+    {
+        AST_T* visited_ast = visitor_visit(visitor, args[i]);
+
+        switch (visited_ast->type)
+        {
+            case AST_STRING: printf("%s\n", visited_ast->string_value); break;
+        }
+
+        printf("%p\n", visited_ast);
+    }
+
+    return init_ast(AST_NOOP);
+}
 
 visitor_T* init_visitor()
 {
@@ -57,7 +75,12 @@ AST_T* visitor_visit_variable(visitor_T* visitor, AST_T* node)
 
 AST_T* visitor_visit_function_call(visitor_T* visitor, AST_T* node)
 {
+    if (strcmp(node->function_call_name, "eve") == 0)
+    {
+        return builtin_function_print(visitor, node->function_call_arguments, node->function_call_arguments_size);
+    }
 
+    printf("Undifiend method '%s'\n", node->function_call_name);
 }
 
 AST_T* visitor_visit_string(visitor_T* visitor, AST_T* node)

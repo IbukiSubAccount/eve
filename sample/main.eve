@@ -1,5 +1,8 @@
-v name = "Ibuki Yoshida ";
+v name = "Ibuki Yoshida";
 v text = "Hello World ";
-v message = "Hi there";
 
-eve(name + text + message);
+eve(name + text);
+
+exit();
+
+eve(name + text);

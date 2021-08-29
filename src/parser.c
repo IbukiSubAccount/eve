@@ -110,12 +110,15 @@ AST_T* parser_parse_function_call(parser_T* parser) // return AST node type of f
 
     function_call->function_call_arguments = calloc(1, sizeof(struct AST_STRUCT*)); // alocating memory for the function call list
 
-    // printf("%s\n", parser->current_token->value);
-    AST_T* ast_expr = parser_parse_expr(parser); // parsing statement
-    function_call->function_call_arguments[0] = ast_expr; // adding the statement to the begining list
-    function_call->function_call_arguments_size += 1;
+    if (parser->current_token->type != TOKEN_RPAREN) // if current token type is not Right Paren means not exit
+    {
+        // printf("%s\n", parser->current_token->value);
+        AST_T* ast_expr = parser_parse_expr(parser); // parsing statement
+        function_call->function_call_arguments[0] = ast_expr; // adding the statement to the begining list
+        function_call->function_call_arguments_size += 1;
+    }
 
-    // parse another function call arguments if COMMA
+    // parse another function call arguments if PLUS
     while (parser->current_token->type == TOKEN_PLUS)
     {
         parser_eat(parser, TOKEN_PLUS);

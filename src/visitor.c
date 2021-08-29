@@ -12,9 +12,8 @@ static AST_T* builtin_function_print(visitor_T* visitor, AST_T** args, int args_
         switch (visited_ast->type)
         {
             case AST_STRING: printf("%s\n", visited_ast->string_value); break;
+            default: printf("%p\n", visited_ast); break;
         }
-
-        printf("%p\n", visited_ast);
     }
 
     return init_ast(AST_NOOP);
@@ -49,11 +48,6 @@ AST_T* visitor_visit(visitor_T* visitor, AST_T* node)
 
 AST_T* visitor_visit_variable_definition(visitor_T* visitor, AST_T* node)
 {
-    printf("visitor visit variable definition\n");
-}
-
-AST_T* visitor_visit_variable(visitor_T* visitor, AST_T* node)
-{
     if (visitor->variable_definitions == (void*) 0) // if list is null
     {
         visitor->variable_definitions = calloc(1, sizeof(struct AST_STRUCT*)); // allocating memory
@@ -73,6 +67,22 @@ AST_T* visitor_visit_variable(visitor_T* visitor, AST_T* node)
     return node;
 }
 
+AST_T* visitor_visit_variable(visitor_T* visitor, AST_T* node)
+{
+    for (int i = 0; i < visitor->variable_definitions_size; i++)
+    {
+        AST_T* vardef = visitor->variable_definitions[i];
+
+        if (strcmp(vardef->variable_definition_variable_name, node->variable_name) == 0)
+        {
+            return visitor_visit(visitor, vardef->variable_definition_value);
+        }
+    }
+
+    printf("Undifined variable\n");
+    return node;
+}
+
 AST_T* visitor_visit_function_call(visitor_T* visitor, AST_T* node)
 {
     if (strcmp(node->function_call_name, "eve") == 0)
@@ -85,7 +95,7 @@ AST_T* visitor_visit_function_call(visitor_T* visitor, AST_T* node)
 
 AST_T* visitor_visit_string(visitor_T* visitor, AST_T* node)
 {
-
+    return node;
 }
 
 AST_T* visitor_visit_compound(visitor_T* visitor, AST_T* node)

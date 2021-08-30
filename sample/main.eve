@@ -1,8 +1,8 @@
-v name = "Ibuki Yoshida";
-v text = "Hello World ";
+v name = "Ibuki Yoshida":
+v text = "Hello World ":
 
-eve(name + text);
+eve[name + text]:
 
-exit();
+exit[]:
 
-eve(name + text);
+eve[name + text]:

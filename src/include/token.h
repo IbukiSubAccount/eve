@@ -9,8 +9,9 @@ typedef struct TOKEN_STRUCT
         TOKEN_EQUALS, // =
         TOKEN_STRING, // "abc"
         TOKEN_SEMI, // ;
-        TOKEN_LPAREN, // (
-        TOKEN_RPAREN, // )
+        TOKEN_COLON, // :
+        TOKEN_LPAREN, // [
+        TOKEN_RPAREN, // ]
         TOKEN_COMMA, // ,
         TOKEN_PLUS, // +
         TOKEN_EOF

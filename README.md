@@ -1,6 +1,6 @@
 # Eve Programming Language
 
-current version 1.0.0
+![](https://img.shields.io/github/v/release/ibukiyoshidaa/eve?style=plastic)
 
 #### How to use
 

@@ -31,12 +31,27 @@ void lexer_skip_whitespace(lexer_T* lexer) // skip the white space.
     }
 }
 
+void lexer_skip_comment(lexer_T* lexer) // skip the comment.
+{
+    lexer_advance(lexer);
+
+    while (lexer->c != '#')
+    {
+        lexer_advance(lexer);
+    }
+
+    lexer_advance(lexer);
+}
+
 token_T* lexer_get_next_token(lexer_T* lexer) // call this function to get the next token in the contents.
 {
     while (lexer->c != '\0' && lexer->i < strlen(lexer->contents)) // if still have characters to parse continue.
     {
         if (lexer->c == ' ' || lexer->c == 10)
             lexer_skip_whitespace(lexer);
+        
+        if (lexer->c == '#')
+            lexer_skip_comment(lexer);
 
         if (isalnum(lexer->c))
             return lexer_collect_id(lexer);

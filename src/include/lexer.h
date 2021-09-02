@@ -15,6 +15,8 @@ void lexer_advance(lexer_T* lexer); // move pointer to the next character in the
 
 void lexer_skip_whitespace(lexer_T* lexer); // skip the white space.
 
+void lexer_skip_comment(lexer_T* lexer); // skip the comment.
+
 token_T* lexer_get_next_token(lexer_T* lexer); // call this function to get the next token in the contents.
 
 token_T* lexer_collect_string(lexer_T* lexer); // define how to parse string.

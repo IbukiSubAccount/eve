@@ -1,8 +1,5 @@
-v name = "Ibuki Yoshida":
-v text = "Hello World ":
+v text = "Hello World":
 
-eve[name, text]:
+# this is a comment #
 
-exit[]:
-
-eve[name, text]:
+eve[text]:

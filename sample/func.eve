@@ -1,5 +1,9 @@
 func main[] {
-    eve["Hello"]:
+    eve["Hello World!"]:
 }:
+
+main[]:
+
+exit[]:
 
 main[]:

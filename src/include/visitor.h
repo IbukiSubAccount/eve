@@ -19,6 +19,8 @@ AST_T* visitor_visit(visitor_T* visitor, AST_T* node); // 1. take in the root no
 
 AST_T* visitor_visit_variable_definition(visitor_T* visitor, AST_T* node); // 3. visit the variabe definition
 
+AST_T* visitor_visit_function_definition(visitor_T* visitor, AST_T* node);
+
 AST_T* visitor_visit_variable(visitor_T* visitor, AST_T* node); // 5. visit the variable and look up the memory
 
 AST_T* visitor_visit_function_call(visitor_T* visitor, AST_T* node); // 4. visit function call

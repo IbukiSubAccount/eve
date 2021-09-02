@@ -118,10 +118,10 @@ AST_T* parser_parse_function_call(parser_T* parser) // return AST node type of f
         function_call->function_call_arguments_size += 1;
     }
 
-    // parse another function call arguments if PLUS
-    while (parser->current_token->type == TOKEN_PLUS)
+    // parse another function call arguments if COMMA
+    while (parser->current_token->type == TOKEN_COMMA)
     {
-        parser_eat(parser, TOKEN_PLUS);
+        parser_eat(parser, TOKEN_COMMA);
 
         // printf("%s\n", parser->current_token->value);
 

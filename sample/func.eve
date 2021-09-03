@@ -1,5 +1,6 @@
-func main[] {
-    eve["Hello World!"]:
+func main[x, y] {
+    eve[x]:
+    eve[y]:
 }:
 
-main[]:
+main["Hello", "World"]:

@@ -13,7 +13,7 @@ install:
 	make
 	cp ./eve.out /usr/local/bin/eve
 	@echo '================================================================='
-	@echo 'Version: 1.4.0'
+	@echo 'Version: 1.4.1'
 
 clean:
 	-rm *.out

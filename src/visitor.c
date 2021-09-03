@@ -104,7 +104,7 @@ AST_T* visitor_visit_function_call(visitor_T* visitor, AST_T* node)
         exit(1);
     }
 
-    for (int i = 0; i < fdef->function_definition_args_size; i++)
+    for (int i = 0; i < (int) node->function_call_arguments_size; i++)
     {
         // grab the variable from the function definition arguments.
         AST_T* ast_var = (AST_T*) fdef->function_definition_args[i];

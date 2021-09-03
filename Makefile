@@ -12,6 +12,8 @@ $(exec): $(objects)
 install:
 	make
 	cp ./eve.out /usr/local/bin/eve
+	@echo '================================================================='
+	@echo 'Version: 1.3.2'
 
 clean:
 	-rm *.out

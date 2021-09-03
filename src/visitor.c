@@ -98,13 +98,38 @@ AST_T* visitor_visit_function_call(visitor_T* visitor, AST_T* node)
         node->function_call_name
     );
 
-    if (fdef != (void*)0)
+    if (fdef == (void*)0)
     {
-        // printf("Found it!\n");
-        return visitor_visit(visitor, fdef->function_definition_body);
+        printf("Undifiend method '%s'\n", node->function_call_name);
+        exit(1);
     }
 
-    printf("Undifiend method '%s'\n", node->function_call_name);
+    for (int i = 0; i < fdef->function_definition_args_size; i++)
+    {
+        // grab the variable from the function definition arguments.
+        AST_T* ast_var = (AST_T*) fdef->function_definition_args[i];
+
+        // grab the value from the function call arguments.
+        AST_T* ast_value = (AST_T*) node->function_call_arguments[i];
+
+        //  create a new variable definition with the value of the argument.
+        // in the function call
+        AST_T* ast_vardef = init_ast(AST_VARIABLE_DEFINITION);
+
+        // copy the name from the function definition argument into the new
+        // variable definition.
+        ast_vardef->variable_definition_value = ast_value;
+
+        // push our variable definition into the function body scope.
+        ast_vardef->variable_definition_variable_name = calloc(strlen(ast_var->variable_name) + 1, sizeof(char));
+        strcpy(ast_vardef->variable_definition_variable_name, ast_var->variable_name);
+
+        scope_add_variable_definition(fdef->function_definition_body->scope, ast_vardef);
+    }
+    
+    // printf("Found it!\n");
+    return visitor_visit(visitor, fdef->function_definition_body);
+
 }
 
 AST_T* visitor_visit_string(visitor_T* visitor, AST_T* node)

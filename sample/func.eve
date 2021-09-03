@@ -1,6 +1,9 @@
 func main[x, y] {
-    eve[x]:
-    eve[y]:
+    eve[x, y]:
 }:
 
 main["Hello", "World"]:
+
+# main["Hello", "World"]: #
+
+# main["Hello", "World"]: #

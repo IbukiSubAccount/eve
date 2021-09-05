@@ -13,3 +13,5 @@ $ eve <filename>
 ```
 
 - sample programs in the eve/sample/main.eve
+
+<a href="https://eveofficial.herokuapp.com/docs">how to use | syntax<a>

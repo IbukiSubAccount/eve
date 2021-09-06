@@ -8,6 +8,7 @@ typedef struct TOKEN_STRUCT
         TOKEN_ID, // identifier
         TOKEN_EQUALS, // =
         TOKEN_STRING, // "abc"
+        TOKEN_INT, // 123
         TOKEN_SEMI, // ;
         TOKEN_COLON, // :
         TOKEN_LPAREN, // [

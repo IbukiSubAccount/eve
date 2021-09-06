@@ -38,6 +38,8 @@ AST_T* parser_parse_variable(parser_T* parser, scope_T* scope); // return AST no
 
 AST_T* parser_parse_string(parser_T* parser, scope_T* scope); // return AST node type of string
 
+AST_T* parser_parse_int(parser_T* parser, scope_T* scope); // return AST node type of string
+
 AST_T* parser_parse_id(parser_T* parser, scope_T* scope);
 
 #endif

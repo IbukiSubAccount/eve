@@ -61,6 +61,11 @@ token_T* lexer_get_next_token(lexer_T* lexer) // call this function to get the n
             return lexer_collect_string(lexer);
         }
 
+        if (lexer->c == '`')
+        { 
+            return lexer_collect_int(lexer);
+        }
+
         switch (lexer->c) // switching characters.
         {
             case '=': return lexer_advance_with_token(lexer, init_token(TOKEN_EQUALS, lexer_get_current_char_as_string(lexer))); break;
@@ -101,6 +106,29 @@ token_T* lexer_collect_string(lexer_T* lexer) // define how to parse string.
     return init_token(TOKEN_STRING, value);
 }
 
+token_T* lexer_collect_int(lexer_T* lexer) // define how to parse int.
+{
+    lexer_advance(lexer);
+
+    char* value = calloc(1, sizeof(char));
+
+    value[0] = '\0';
+
+    while (lexer->c != '`')
+    {
+        char* s = lexer_get_current_char_as_string(lexer);
+        value = realloc(value, (strlen(value) + strlen(s) + 1) * sizeof(char));
+        strcat(value, s);
+
+        lexer_advance(lexer);
+    }
+
+    // printf("%s\n", value);
+    lexer_advance(lexer);
+    
+    return init_token(TOKEN_INT, value);
+}
+
 token_T* lexer_collect_id(lexer_T* lexer) // define how to parse id.
 {
     char* value = calloc(1, sizeof(char));
@@ -116,12 +144,15 @@ token_T* lexer_collect_id(lexer_T* lexer) // define how to parse id.
         lexer_advance(lexer);
     }
 
+    // printf("%s\n", value);
     return init_token(TOKEN_ID, value);
 }
 
 token_T* lexer_advance_with_token(lexer_T* lexer, token_T* token)
 {
     lexer_advance(lexer);
+
+    // printf("%s\n", token->value);
 
     return token;
 }

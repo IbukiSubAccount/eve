@@ -1,5 +1,9 @@
-v text = "Hello World":
+v number = `10`:
+v string = "秒後に実行されます":
+v text = "Hello World!":
 
-# this is a comment #
+eve[number, string]:
+
+sleep[number]:
 
 eve[text]:

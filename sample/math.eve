@@ -1,0 +1,5 @@
+v number = 10:
+
+v secondNumber = 100:
+
+eve[number + secondNumber]:

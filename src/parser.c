@@ -92,9 +92,11 @@ AST_T* parser_parse_statements(parser_T* parser, scope_T* scope) // parsing list
 
 AST_T* parser_parse_expr(parser_T* parser, scope_T* scope)
 {
+    // printf("parser parse expr\n");
     switch (parser->current_token->type)
     {
         case TOKEN_STRING: return parser_parse_string(parser, scope);
+        case TOKEN_INT: return parser_parse_int(parser, scope);
         case TOKEN_ID: return parser_parse_id(parser, scope);
     }
 
@@ -251,6 +253,22 @@ AST_T* parser_parse_string(parser_T* parser, scope_T* scope) // return AST node 
     ast_string->scope = scope;
 
     return ast_string;
+}
+
+AST_T* parser_parse_int(parser_T* parser, scope_T* scope) // return AST node type of string
+{
+    char* endPtr;
+    long long int int_value = strtoll(parser->current_token->value, &endPtr, 10);
+    // long long int int_value = atoi(parser->current_token->value);
+    
+    parser_eat(parser, TOKEN_INT);
+    AST_T* ast_int = init_ast(AST_INT);
+    ast_int->int_value = int_value;
+
+    ast_int->scope = scope;
+    
+    // printf("parser parse int %d\n", int_value);
+    return ast_int;
 }
 
 AST_T* parser_parse_id(parser_T* parser, scope_T* scope)

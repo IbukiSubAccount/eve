@@ -21,6 +21,8 @@ token_T* lexer_get_next_token(lexer_T* lexer); // call this function to get the 
 
 token_T* lexer_collect_string(lexer_T* lexer); // define how to parse string.
 
+token_T* lexer_collect_int(lexer_T* lexer); // define how to parse int.
+
 token_T* lexer_collect_id(lexer_T* lexer); // define how to parse id.
 
 token_T* lexer_advance_with_token(lexer_T* lexer, token_T* token);

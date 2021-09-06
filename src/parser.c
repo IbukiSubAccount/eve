@@ -32,9 +32,8 @@ void parser_eat(parser_T* parser, int token_type) // get a expected token
     else
     {
         printf(
-            "[Parser ERROR] Unexpected token '%s', whith type %d",
-            parser->current_token->value,
-            parser->current_token->type
+            "[Syntax ERROR] Unexpected token '%s'\n",
+            parser->current_token->value
         );
         exit(1);
     }
@@ -259,7 +258,6 @@ AST_T* parser_parse_int(parser_T* parser, scope_T* scope) // return AST node typ
 {
     char* endPtr;
     long long int int_value = strtoll(parser->current_token->value, &endPtr, 10);
-    // long long int int_value = atoi(parser->current_token->value);
     
     parser_eat(parser, TOKEN_INT);
     AST_T* ast_int = init_ast(AST_INT);

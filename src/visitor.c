@@ -32,11 +32,9 @@ static AST_T* builtin_function_sleep(visitor_T* visitor, AST_T** args, int args_
         switch (visited_ast->type)
         {
             case AST_INT: sleep(visited_ast->int_value); break;
-            default: printf("Sleep function data type ERROR\n"); exit(1);
+            default: printf("Sleep function data type error expecting integer\n"); exit(1);
         }
-
     }
-    // printf("\n");
 
     return init_ast(AST_NOOP);
 }

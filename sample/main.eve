@@ -1,4 +1,4 @@
-v number = `10`:
+v number = `5`:
 v string = "秒後に実行されます":
 v text = "Hello World!":
 

@@ -113,14 +113,22 @@ token_T* lexer_collect_int(lexer_T* lexer) // define how to parse int.
     char* value = calloc(1, sizeof(char));
 
     value[0] = '\0';
-
+    
     while (lexer->c != '`')
     {
-        char* s = lexer_get_current_char_as_string(lexer);
-        value = realloc(value, (strlen(value) + strlen(s) + 1) * sizeof(char));
-        strcat(value, s);
+        if (isdigit(lexer->c))
+        {
+            char* s = lexer_get_current_char_as_string(lexer);
+            value = realloc(value, (strlen(value) + strlen(s) + 1) * sizeof(char));
+            strcat(value, s);
 
-        lexer_advance(lexer);
+            lexer_advance(lexer);
+        }
+        else
+        {
+            printf("[ERROR] Expecting integer\n");
+            exit(1);
+        }
     }
 
     // printf("%s\n", value);

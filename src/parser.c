@@ -3,13 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 
-/*
-static scope_T* get_node_scope(parser_T* parser, AST_T* node)
-{
-    return node->scope == (void*)0 ? parser->scope : node->scope;
-}
-*/
-
 parser_T* init_parser(lexer_T* lexer)
 {
     parser_T* parser = calloc(1, sizeof(struct PARSER_STRUCT));

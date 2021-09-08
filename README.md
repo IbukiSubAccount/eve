@@ -2,16 +2,24 @@
 
 ![](https://img.shields.io/github/v/release/ibukiyoshidaa/eve?style=plastic)
 
-#### How to use
+> How to use Eve
 
 ```
 $ sudo make install
 ```
 
 ```
-$ eve <filename>
+$ eve <filename>.eve
 ```
 
-- sample programs in the eve/sample/main.eve
+or
+
+```
+$ make
+```
+
+```
+$ ./eve.out <filename>.eve
+```
 
 <a href="https://eveofficial.herokuapp.com/docs">how to use | syntax<a>

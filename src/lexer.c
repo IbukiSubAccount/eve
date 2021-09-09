@@ -103,7 +103,7 @@ token_T* lexer_get_next_token(lexer_T* lexer) // call this function to get the n
             case '{': return lexer_advance_with_token(lexer, init_token(TOKEN_LBRACE, lexer_get_current_char_as_string(lexer))); break;
             case '}': return lexer_advance_with_token(lexer, init_token(TOKEN_RBRACE, lexer_get_current_char_as_string(lexer))); break;
             case ',': return lexer_advance_with_token(lexer, init_token(TOKEN_COMMA, lexer_get_current_char_as_string(lexer))); break;
-            default: printf("SyntaxError: Unexpected '%c' (line %d)\n", lexer->c, lexer->line_n); exit(1); break;
+            default: printf("\x1b[31m");printf("SyntaxError: Unexpected '%c' (line %d)\n", lexer->c, lexer->line_n); exit(1); break;
         }
     }
 
@@ -154,6 +154,7 @@ token_T* lexer_collect_int(lexer_T* lexer) // define how to parse int.
         }
         else
         {
+            printf("\x1b[31m");
             printf("ERROR: Expecting integer '%c' (line %d)\n", lexer->c, lexer->line_n);
             exit(1);
         }

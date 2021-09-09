@@ -25,8 +25,9 @@ void parser_eat(parser_T* parser, int token_type) // get a expected token
     else
     {
         printf(
-            "[Syntax ERROR] Unexpected token '%s'\n",
-            parser->current_token->value
+            "SyntaxError: Unexpected token '%s' (line %d)\n",
+            parser->current_token->value,
+            parser->lexer->line_n
         );
         exit(1);
     }

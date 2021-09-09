@@ -12,7 +12,6 @@ $(exec): $(objects)
 
 install:
 	make
-	bash ./src/shell/run.sh
 	cp ./eve.out /usr/local/bin/eve
 	./version
 	

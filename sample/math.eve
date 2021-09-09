@@ -1,5 +1,4 @@
-v number = 10:
+v inputText = input["input text : "]:
+v text = "入力された文字列：":
 
-v secondNumber = 100:
-
-eve[number + secondNumber]:
+eve[text,inputText]:

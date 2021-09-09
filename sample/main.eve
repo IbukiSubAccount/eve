@@ -1,9 +1,8 @@
-v number = `5`:
-v string = "秒後に実行されます":
-v text = "Hello World!":
+func main[]{
+    v inputText = input[]:
+    v text = "入力された文字列：":
 
-eve[number, string]:
+    eve[text,inputText]:
+}:
 
-sleep[number]:
-
-eve[text]:
+main[]:

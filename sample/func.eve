@@ -1,9 +1,9 @@
-func main[x, y] {
-    eve[x, y]:
+# 自作言語
+
+func main[] {
+    text = "Hello World!":
+
+    eve[text]:
 }:
 
-main["Hello", "World"]:
-
-# main["Hello", "World"]: #
-
-# main["Hello", "World"]: #
+main[]:

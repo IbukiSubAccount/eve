@@ -45,6 +45,7 @@ AST_T* parser_parse_statement(parser_T* parser, scope_T* scope) // parsing singl
     {
         // if parser current token type is TOKEN ID, parse token id
         case TOKEN_ID: return parser_parse_id(parser, scope);
+        default: return 0;
     }
 
     return init_ast(AST_NOOP);
@@ -95,6 +96,7 @@ AST_T* parser_parse_expr(parser_T* parser, scope_T* scope)
         case TOKEN_STRING: return parser_parse_string(parser, scope);
         case TOKEN_INT: return parser_parse_int(parser, scope);
         case TOKEN_ID: return parser_parse_id(parser, scope);
+        default: return 0;
     }
 
     return init_ast(AST_NOOP);
@@ -102,12 +104,12 @@ AST_T* parser_parse_expr(parser_T* parser, scope_T* scope)
 
 AST_T* parser_parse_factor(parser_T* parser, scope_T* scope)
 {
-
+    return 0;
 }
 
 AST_T* parser_parse_term(parser_T* parser, scope_T* scope)
 {
-
+    return 0;
 }
 
 AST_T* parser_parse_function_call(parser_T* parser, scope_T* scope) // return AST node type of function call
@@ -258,7 +260,7 @@ AST_T* parser_parse_input(parser_T* parser, scope_T* scope)
         char *ptr;
         fgets(bos, 100, stdin);
         bos[strlen(bos) - 1] = 0;
-        ptr=memset(ptr, 0, 10);
+        //ptr=memset(ptr, 0, 10);
         ptr=(char*)malloc (sizeof(bos));
         strcpy(ptr, bos);
         parser_eat(parser, TOKEN_RPAREN);
@@ -270,6 +272,8 @@ AST_T* parser_parse_input(parser_T* parser, scope_T* scope)
 
         return ast_string;
     }
+
+    return 0;
 }
 
 AST_T* parser_parse_string(parser_T* parser, scope_T* scope) // return AST node type of string{

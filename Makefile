@@ -5,6 +5,7 @@ flags = -g
 
 $(exec): $(objects)
 	gcc $(objects) $(flags) -o $(exec)
+	g++ -o version src/cpp/versions.cpp
 
 %.o: %.c include/%.h
 	gcc -c $(flags) $< -o $@
@@ -13,9 +14,11 @@ install:
 	make
 	bash ./src/shell/run.sh
 	cp ./eve.out /usr/local/bin/eve
-	bash ./src/shell/version.sh
+	./version
+	
 
 clean:
 	-rm *.out
 	-rm *.o
 	-rm src/*.o
+	-rm version

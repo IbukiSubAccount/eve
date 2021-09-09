@@ -10,17 +10,24 @@ lexer_T* init_lexer(char* contents) // init lexer.
     lexer->contents = contents;
     lexer->i = 0;
     lexer->c = contents[lexer->i];
+    lexer->line_n = 1;
 
     return lexer;
 }
 
 void lexer_advance(lexer_T* lexer) // move pointer to the next character in the content.
 {
+
     if (lexer->c != '\0' && lexer->i < strlen(lexer->contents))
     {
         lexer->i += 1;
         lexer->c = lexer->contents[lexer->i];
     }
+
+    
+    if (lexer->c == '\n' || lexer->c == 10)
+        lexer->line_n += 1;
+    
 }
 
 void lexer_skip_whitespace(lexer_T* lexer) // skip the white space.
@@ -33,14 +40,9 @@ void lexer_skip_whitespace(lexer_T* lexer) // skip the white space.
 
 void lexer_skip_comment(lexer_T* lexer) // skip the comment.
 {
-    lexer_advance(lexer);
-
-    while (lexer->c != '#')
-    {
-        lexer_advance(lexer);
-    }
-
-    lexer_advance(lexer);
+    /*
+    comment funciton
+    */
 }
 
 token_T* lexer_get_next_token(lexer_T* lexer) // call this function to get the next token in the contents.
@@ -50,8 +52,10 @@ token_T* lexer_get_next_token(lexer_T* lexer) // call this function to get the n
         if (lexer->c == ' ' || lexer->c == 10)
             lexer_skip_whitespace(lexer);
         
+        /*
         if (lexer->c == '#')
             lexer_skip_comment(lexer);
+        */
 
         if (isalnum(lexer->c))
             return lexer_collect_id(lexer);
@@ -66,6 +70,11 @@ token_T* lexer_get_next_token(lexer_T* lexer) // call this function to get the n
             return lexer_collect_int(lexer);
         }
 
+        if (lexer->c == '\n')
+        {
+            lexer_advance(lexer);
+        }
+
         switch (lexer->c) // switching characters.
         {
             case '=': return lexer_advance_with_token(lexer, init_token(TOKEN_EQUALS, lexer_get_current_char_as_string(lexer))); break;
@@ -76,6 +85,7 @@ token_T* lexer_get_next_token(lexer_T* lexer) // call this function to get the n
             case '{': return lexer_advance_with_token(lexer, init_token(TOKEN_LBRACE, lexer_get_current_char_as_string(lexer))); break;
             case '}': return lexer_advance_with_token(lexer, init_token(TOKEN_RBRACE, lexer_get_current_char_as_string(lexer))); break;
             case ',': return lexer_advance_with_token(lexer, init_token(TOKEN_COMMA, lexer_get_current_char_as_string(lexer))); break;
+            default: printf("SyntaxError: Unexpected '%c' (line %d)\n", lexer->c, lexer->line_n); exit(1); break;
         }
     }
 
@@ -126,7 +136,7 @@ token_T* lexer_collect_int(lexer_T* lexer) // define how to parse int.
         }
         else
         {
-            printf("[ERROR] Expecting integer\n");
+            printf("ERROR: Expecting integer '%c' (line %d)\n", lexer->c, lexer->line_n);
             exit(1);
         }
     }

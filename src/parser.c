@@ -23,7 +23,8 @@ void parser_eat(parser_T* parser, int token_type) // get a expected token
         parser->current_token = lexer_get_next_token(parser->lexer);
     }
     else
-    {
+    {   
+        printf("\x1b[31m");
         printf(
             "SyntaxError: Unexpected token '%s' (line %d)\n",
             parser->current_token->value,

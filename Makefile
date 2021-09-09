@@ -11,9 +11,9 @@ $(exec): $(objects)
 
 install:
 	make
+	bash ./src/shell/run.sh
 	cp ./eve.out /usr/local/bin/eve
-	@echo '================================================================='
-	@echo 'Version: 1.4.1'
+	bash ./src/shell/version.sh
 
 clean:
 	-rm *.out

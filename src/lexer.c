@@ -38,11 +38,23 @@ void lexer_skip_whitespace(lexer_T* lexer) // skip the white space.
     }
 }
 
-void lexer_skip_comment(lexer_T* lexer) // skip the comment.
+void lexer_skip_block_comment(lexer_T* lexer)
 {
-    /*
-    comment funciton
-    */
+    while (1)
+    {
+        lexer_advance(lexer);
+
+        if (lexer->c == '*')
+        {
+            lexer_advance(lexer);
+
+            if (lexer->c == '/')
+            {
+                lexer_advance(lexer);
+                return;
+            }
+        }
+    }
 }
 
 token_T* lexer_get_next_token(lexer_T* lexer) // call this function to get the next token in the contents.
@@ -70,9 +82,15 @@ token_T* lexer_get_next_token(lexer_T* lexer) // call this function to get the n
             return lexer_collect_int(lexer);
         }
 
-        if (lexer->c == '\n')
+        if (lexer->c == '/')
         {
             lexer_advance(lexer);
+            if (lexer->c == '*')
+            {
+                lexer_advance(lexer);
+                lexer_skip_block_comment(lexer);
+                continue;
+            }
         }
 
         switch (lexer->c) // switching characters.

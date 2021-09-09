@@ -7,6 +7,7 @@ typedef struct LEXER_STRUCT
     char c; // current character.
     unsigned int i;
     char* contents; // the source code to lex.
+    unsigned int line_n;
 } lexer_T;
 
 lexer_T* init_lexer(char* contents); // init lexer.

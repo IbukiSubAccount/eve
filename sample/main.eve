@@ -1,8 +1,7 @@
-func main[]{
-    v inputText = input[]:
-    v text = "入力された文字列：":
-
-    eve[text,inputText]:
+func main[] {
+    v text = "Ibuki":
+    eve[`a`]:
+    eve["hello"]:
 }:
 
 main[]:

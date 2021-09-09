@@ -1,9 +1,11 @@
-# 自作言語
+/* This is how to use comments */
 
 func main[] {
-    text = "Hello World!":
-
+    v text = input["ここに入力："]:
     eve[text]:
+    /*eve["Hello Ibuki"]:*/
 }:
 
 main[]:
+
+/* This is how to use comments */

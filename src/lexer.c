@@ -63,13 +63,8 @@ token_T* lexer_get_next_token(lexer_T* lexer) // call this function to get the n
     {
         if (lexer->c == ' ' || lexer->c == 10)
             lexer_skip_whitespace(lexer);
-        
-        /*
-        if (lexer->c == '#')
-            lexer_skip_comment(lexer);
-        */
 
-        if (isalnum(lexer->c))
+        if (isalpha(lexer->c))
             return lexer_collect_id(lexer);
 
         if (lexer->c == '"')
@@ -77,7 +72,7 @@ token_T* lexer_get_next_token(lexer_T* lexer) // call this function to get the n
             return lexer_collect_string(lexer);
         }
 
-        if (lexer->c == '`')
+        if (isdigit(lexer->c))
         { 
             return lexer_collect_int(lexer);
         }
@@ -137,13 +132,11 @@ token_T* lexer_collect_string(lexer_T* lexer) // define how to parse string.
 
 token_T* lexer_collect_int(lexer_T* lexer) // define how to parse int.
 {
-    lexer_advance(lexer);
-
     char* value = calloc(1, sizeof(char));
 
     value[0] = '\0';
     
-    while (lexer->c != '`')
+    while(isdigit(lexer->c))
     {
         if (isdigit(lexer->c))
         {
@@ -160,9 +153,6 @@ token_T* lexer_collect_int(lexer_T* lexer) // define how to parse int.
             exit(1);
         }
     }
-
-    // printf("%s\n", value);
-    lexer_advance(lexer);
     
     return init_token(TOKEN_INT, value);
 }

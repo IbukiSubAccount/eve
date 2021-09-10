@@ -1,9 +1,11 @@
 /* This is how to use comments */
 
 func main[] {
-    v text = input["ここに入力："]:
-    eve[text]:
-    /*eve["Hello Ibuki"]:*/
+    v text = "Hello World!":
+
+    v sample = text:
+
+    eve[sample]:
 }:
 
 main[]:

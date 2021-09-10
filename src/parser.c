@@ -86,10 +86,7 @@ AST_T* parser_parse_statements(parser_T* parser, scope_T* scope) // parsing list
 }
 
 AST_T* parser_parse_expr(parser_T* parser, scope_T* scope)
-{   
-    if (strcmp(parser->current_token->value, "input") == 0 & parser->current_token->type == TOKEN_ID)
-        return parser_parse_input(parser, scope);
-
+{
     // printf("parser parse expr\n");
     switch (parser->current_token->type)
     {
@@ -243,37 +240,6 @@ AST_T* parser_parse_variable(parser_T* parser, scope_T* scope) // return AST nod
     ast_variable->scope = scope;
 
     return ast_variable;
-}
-
-AST_T* parser_parse_input(parser_T* parser, scope_T* scope)
-{
-    if (strcmp(parser->current_token->value, "input") == 0)
-    {
-        parser_eat(parser, TOKEN_ID);
-        parser_eat(parser, TOKEN_LPAREN);
-        if (parser->current_token->type == TOKEN_STRING)
-        {
-            printf("%s", parser->current_token->value);
-            parser_eat(parser, TOKEN_STRING);
-        }
-        char bos[100];
-        char *ptr;
-        fgets(bos, 100, stdin);
-        bos[strlen(bos) - 1] = 0;
-        //ptr=memset(ptr, 0, 10);
-        ptr=(char*)malloc (sizeof(bos));
-        strcpy(ptr, bos);
-        parser_eat(parser, TOKEN_RPAREN);
-
-        AST_T* ast_string = init_ast(AST_STRING);
-        ast_string->string_value = ptr;
-
-        ast_string->scope = scope;
-
-        return ast_string;
-    }
-
-    return 0;
 }
 
 AST_T* parser_parse_string(parser_T* parser, scope_T* scope) // return AST node type of string{

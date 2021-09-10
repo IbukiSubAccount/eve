@@ -1,4 +1,5 @@
-v inputText = input["input text : "]:
+eve["Hello"]:
+v inputText = input[]:
 v text = "入力された文字列：":
 
 eve[text,inputText]:

@@ -32,7 +32,7 @@ void lexer_advance(lexer_T* lexer) // move pointer to the next character in the 
 
 void lexer_skip_whitespace(lexer_T* lexer) // skip the white space.
 {
-    while (lexer->c == ' ' || lexer->c == 10) // skip space and new line. by the way, 10 is the code of the new line.
+    while (lexer->c == ' ' || lexer->c == 10 || lexer->c == 13) // skip space and new line. by the way, 10 is the code of the new line.
     {
         lexer_advance(lexer);
     }
@@ -61,7 +61,7 @@ token_T* lexer_get_next_token(lexer_T* lexer) // call this function to get the n
 {
     while (lexer->c != '\0' && lexer->i < strlen(lexer->contents)) // if still have characters to parse continue.
     {
-        if (lexer->c == ' ' || lexer->c == 10)
+        if (lexer->c == ' ' || lexer->c == 10 || lexer->c == 13)
             lexer_skip_whitespace(lexer);
 
         if (isalpha(lexer->c))

@@ -2,6 +2,14 @@
 
 ![](https://img.shields.io/github/v/release/ibukiyoshidaa/eve?style=plastic)
 
+> Hello World! in Eve
+```go
+eve["Hello World!"]:
+
+eve["こんにちは世界！"]:
+
+```
+
 > How to use Eve
 
 ```

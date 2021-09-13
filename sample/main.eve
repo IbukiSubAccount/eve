@@ -1,7 +1,9 @@
+/* Hello Eve */
+
+/* Define main function */
 func main[] {
-    v text = "Ibuki":
-    eve[`a`]:
-    eve["hello"]:
+    eve["Hello Eve"]:
 }:
 
+/* Call the main function */
 main[]:

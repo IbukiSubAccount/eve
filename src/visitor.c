@@ -32,7 +32,7 @@ static AST_T* builtin_function_sleep(visitor_T* visitor, AST_T** args, int args_
         switch (visited_ast->type)
         {
             case AST_INT: sleep(visited_ast->int_value); break;
-            default: printf("\x1b[31m");printf("Error Sleep function expecting integer\n"); exit(1);
+            default: printf("Error Sleep function expecting integer\n"); exit(1);
         }
     }
 
@@ -98,7 +98,6 @@ AST_T* visitor_visit_variable(visitor_T* visitor, AST_T* node)
     if (vdef != (void*) 0)
         return visitor_visit(visitor, vdef->variable_definition_value);
     
-    printf("\x1b[31m");
     printf("Error: Undifined variable '%s'\n", node->variable_name);
     exit(1);
 }
@@ -125,7 +124,6 @@ AST_T* visitor_visit_function_call(visitor_T* visitor, AST_T* node)
 
     if (fdef == (void*)0)
     {
-        printf("\x1b[31m");
         printf("Error: Undifiend method '%s'\n", node->function_call_name);
         exit(1);
     }

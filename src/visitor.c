@@ -3,6 +3,7 @@
 #include "include/scope.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 static AST_T* builtin_function_print(visitor_T* visitor, AST_T** args, int args_size)
@@ -33,6 +34,35 @@ static AST_T* builtin_function_sleep(visitor_T* visitor, AST_T** args, int args_
         {
             case AST_INT: sleep(visited_ast->int_value); break;
             default: printf("Error Sleep function expecting integer\n"); exit(1);
+        }
+    }
+
+    return init_ast(AST_NOOP);
+}
+
+static AST_T* builtin_function_browser(visitor_T* visitor, AST_T** args, int args_size)
+{
+    for (int i = 0; i < args_size; i++)
+    {
+        AST_T* visited_ast = visitor_visit(visitor, args[i]);
+        #if __APPLE__
+            char s[200] = "open ";
+        #elif _WIN32
+            char s[200] = "start ";
+        #elif __LINUX__
+            char s[200] = "xdg-open ";
+        #else
+            printf("Error Browser function: Unexpected OS");
+            exit(1);
+        #endif
+
+        char *p = visited_ast->string_value;
+        strcat(s, p);
+        printf("%s\n", s);
+        switch (visited_ast->type)
+        {
+            case AST_STRING: system(s); break;
+            default: printf("Error Browser function: expecting string\n"); exit(1);
         }
     }
 
@@ -111,6 +141,10 @@ AST_T* visitor_visit_function_call(visitor_T* visitor, AST_T* node)
     if (strcmp(node->function_call_name, "sleep") == 0)
     {
         return builtin_function_sleep(visitor, node->function_call_arguments, node->function_call_arguments_size);
+    }
+    if (strcmp(node->function_call_name, "browser") == 0)
+    {
+        return builtin_function_browser(visitor, node->function_call_arguments, node->function_call_arguments_size);
     }
     if (strcmp(node->function_call_name, "exit") == 0)
     {

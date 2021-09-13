@@ -33,7 +33,7 @@ static AST_T* builtin_function_sleep(visitor_T* visitor, AST_T** args, int args_
         switch (visited_ast->type)
         {
             case AST_INT: sleep(visited_ast->int_value); break;
-            default: printf("Error Sleep function expecting integer\n"); exit(1);
+            default: printf("Error: Sleep function expecting integer\n"); exit(1);
         }
     }
 

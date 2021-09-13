@@ -52,7 +52,7 @@ static AST_T* builtin_function_browser(visitor_T* visitor, AST_T** args, int arg
         #elif __LINUX__
             char s[200] = "xdg-open ";
         #else
-            printf("Error Browser function: Unexpected OS");
+            printf("Error: Browser function Unexpected OS");
             exit(1);
         #endif
 

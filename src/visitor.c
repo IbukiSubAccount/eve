@@ -64,6 +64,7 @@ static AST_T* builtin_function_browser(visitor_T* visitor, AST_T** args, int arg
             case AST_STRING: system(s); break;
             default: printf("Error Browser function: expecting string\n"); exit(1);
         }
+        free(p);
     }
 
     return init_ast(AST_NOOP);

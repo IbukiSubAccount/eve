@@ -1,6 +1,6 @@
 # Eve Programming Language
 
-![](https://img.shields.io/github/v/release/ibukiyoshidaa/eve?style=plastic)
+[![made-with-C](https://img.shields.io/badge/Made%20with-C-1f425f.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
 
 > Hello World! in Eve
 ```go

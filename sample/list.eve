@@ -1,0 +1,21 @@
+/* How to use lists */
+
+list listName = [
+    "ibuki",
+    "rina",
+    "bob",
+    "john",
+    "harry"
+]:
+
+list animals = [
+    "cat",
+    "dog",
+    "snake",
+    "penguin",
+    "girafe"
+]:
+
+
+/* call the list */
+eve[listName->0]:

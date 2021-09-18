@@ -25,6 +25,15 @@ AST_T* init_ast(int type)
     ast->function_call_arguments = (void*) 0;
     ast->function_call_arguments_size = 0;
 
+    // AST_LIST_DEFINITION
+    ast->list_definition_name = (void*) 0;
+    ast->list_definition_args = (void*) 0;
+    ast->list_definition_args_size = 0;
+
+    // AST_LIST
+    ast->list_name = (void*) 0;
+    ast->list_index = 0;
+
     //AST_STRING
     ast->string_value = (void*) 0;
 

@@ -24,6 +24,21 @@ static AST_T* builtin_function_print(visitor_T* visitor, AST_T** args, int args_
     return init_ast(AST_NOOP);
 }
 
+static AST_T* builtin_function_print_list(visitor_T* visitor, AST_T** args, int args_size)
+{
+    for (int i = 0; i < args_size; i++)
+    {
+        AST_T* visited_ast = visitor_visit(visitor, args[i]);
+
+        switch (visited_ast->type)
+        {
+            case AST_STRING: printf("%s\n", visited_ast->string_value); break;
+            default: break;
+        }
+    }
+    return init_ast(AST_NOOP);
+}
+
 static AST_T* builtin_function_sleep(visitor_T* visitor, AST_T** args, int args_size)
 {
     for (int i = 0; i < args_size; i++)
@@ -85,6 +100,8 @@ AST_T* visitor_visit(visitor_T* visitor, AST_T* node)
         case AST_FUNCTION_DEFINITION: return visitor_visit_function_definition(visitor, node); break;
         case AST_VARIABLE: return visitor_visit_variable(visitor, node); break;
         case AST_FUNCTION_CALL: return visitor_visit_function_call(visitor, node); break;
+        case AST_LIST_DEFINITION: return visitor_visit_list_definition(visitor, node); break;
+        case AST_LIST: return visitor_visit_list(visitor, node); break;
         case AST_STRING: return visitor_visit_string(visitor, node); break;
         case AST_INT: return visitor_visit_int(visitor, node); break;
         case AST_COMPOUND: return visitor_visit_compound(visitor, node); break;
@@ -189,6 +206,35 @@ AST_T* visitor_visit_function_call(visitor_T* visitor, AST_T* node)
     // printf("Found it!\n");
     return visitor_visit(visitor, fdef->function_definition_body);
 
+}
+
+AST_T* visitor_visit_list_definition(visitor_T* visitor, AST_T* node)
+{
+    scope_add_list_definition(
+        node->scope,
+        node
+    );
+    return node;
+}
+
+AST_T* visitor_visit_list(visitor_T* visitor, AST_T* node)
+{
+    AST_T* ldef = scope_get_list_definition(
+        node->scope,
+        node->list_name
+    );
+
+    if (ldef != (void*) 0)
+    {
+        for (int i = 0; i < ldef->list_definition_args_size; i++)
+        {
+            return visitor_visit(visitor, ldef->list_definition_args[node->list_index]);
+        }
+    }
+
+    
+    printf("Error: Undifined list '%s'\n", node->list_name);
+    exit(1);
 }
 
 AST_T* visitor_visit_string(visitor_T* visitor, AST_T* node)

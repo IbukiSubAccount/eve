@@ -92,6 +92,7 @@ AST_T* parser_parse_expr(parser_T* parser, scope_T* scope)
         case TOKEN_STRING: return parser_parse_string(parser, scope);
         case TOKEN_INT: return parser_parse_int(parser, scope);
         case TOKEN_ID: return parser_parse_id(parser, scope);
+        case TOKEN_SEMI: return parser_parse_list(parser, scope);
         default: return 0;
     }
 
@@ -118,7 +119,6 @@ AST_T* parser_parse_function_call(parser_T* parser, scope_T* scope) // return AS
     parser_eat(parser, TOKEN_LPAREN); // eat TOKEN LPAREN
 
     function_call->function_call_arguments = calloc(1, sizeof(struct AST_STRUCT*)); // alocating memory for the function call list
-
     if (parser->current_token->type != TOKEN_RPAREN) // if current token type is not Right Paren means not exit
     {
         // printf("%s\n", parser->current_token->value);
@@ -222,14 +222,69 @@ AST_T* parser_parse_function_definition(parser_T* parser, scope_T* scope)
     return ast;
 }
 
+AST_T* parser_parse_list_definition(parser_T* parser, scope_T* scope)
+{
+    // printf("found the list definition!!!\n");
+    AST_T* ast = init_ast(AST_LIST_DEFINITION);
+    parser_eat(parser, TOKEN_ID);
+    char* list_name = parser->current_token->value;
+    ast->list_definition_name = calloc(
+        strlen(list_name) + 1,
+        sizeof(char)
+    );
+    strcpy(ast->list_definition_name, list_name);
+
+    parser_eat(parser, TOKEN_ID);
+    parser_eat(parser, TOKEN_EQUALS);
+    parser_eat(parser, TOKEN_LPAREN);
+    // printf("value: %s\n", parser->current_token->value);
+
+    if (parser->current_token->type != TOKEN_RPAREN)
+    {
+        ast->list_definition_args = calloc(1, sizeof(struct AST_STRUCT*));
+
+        AST_T* arg = parser_parse_expr(parser, scope);
+        ast->list_definition_args_size += 1;
+        ast->list_definition_args[ast->list_definition_args_size-1] = arg;
+
+        while (parser->current_token->type == TOKEN_COMMA)
+        {
+            parser_eat(parser, TOKEN_COMMA);
+
+            ast->list_definition_args_size += 1;
+
+            ast->list_definition_args =
+                realloc(
+                    ast->list_definition_args,
+                    ast->list_definition_args_size * sizeof(struct AST_STRUCT*)
+                );
+            // printf("value: %s\n", parser->current_token->value);
+            AST_T* arg = parser_parse_expr(parser, scope);
+            ast->list_definition_args[ast->list_definition_args_size-1] = arg;
+        }
+    }
+
+    parser_eat(parser, TOKEN_RPAREN);
+
+    ast->scope = scope;
+
+    return ast;
+}
+
 AST_T* parser_parse_variable(parser_T* parser, scope_T* scope) // return AST node type of variable
 {
     char* token_value = parser->current_token->value;
 
     parser_eat(parser, TOKEN_ID); // v name or function call name
 
+    if (parser->current_token->type == TOKEN_MINUS)
+    {
+        // if ~ list call
+        return parser_parse_list(parser, scope);
+    }
+
     if (parser->current_token->type == TOKEN_LPAREN)
-        // if ( -> function call
+        // if [ -> function call
         return parser_parse_function_call(parser, scope);
 
     // assuming that it's a variable
@@ -268,6 +323,28 @@ AST_T* parser_parse_int(parser_T* parser, scope_T* scope) // return AST node typ
     return ast_int;
 }
 
+AST_T* parser_parse_list(parser_T* parser, scope_T* scope)
+{
+    char* token_value = parser->prev_token->value;
+
+    // assuming that it's a list.
+    AST_T* ast_list = init_ast(AST_LIST);  // create a node for it
+    ast_list->list_name = token_value; // assign a list name
+    parser_eat(parser, TOKEN_MINUS);
+    parser_eat(parser, TOKEN_RP);
+
+    // parse the list index
+    char* endPtr;
+    unsigned int list_index = strtoul(parser->current_token->value, &endPtr, 10);
+    ast_list->list_index = list_index;
+
+    parser_eat(parser, TOKEN_INT);
+
+    ast_list->scope = scope;
+
+    return ast_list;
+}
+
 AST_T* parser_parse_id(parser_T* parser, scope_T* scope)
 {
     if (strcmp(parser->current_token->value, "v") == 0)
@@ -278,6 +355,10 @@ AST_T* parser_parse_id(parser_T* parser, scope_T* scope)
     if (strcmp(parser->current_token->value, "func") == 0)
     {
         return parser_parse_function_definition(parser, scope);
+    }
+    if (strcmp(parser->current_token->value, "list") == 0)
+    {
+        return parser_parse_list_definition(parser, scope);
     }
     else
     {

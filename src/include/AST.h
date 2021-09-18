@@ -9,6 +9,8 @@ typedef struct AST_STRUCT
         AST_FUNCTION_DEFINITION,
         AST_VARIABLE,
         AST_FUNCTION_CALL,
+        AST_LIST_DEFINITION,
+        AST_LIST,
         AST_STRING,
         AST_INT,
         AST_COMPOUND, // list of AST nodes
@@ -34,6 +36,15 @@ typedef struct AST_STRUCT
     char* function_call_name;
     struct AST_STRUCT** function_call_arguments;
     size_t function_call_arguments_size;
+
+    // AST_LIST_DEFINITION
+    char* list_definition_name;
+    struct AST_STRUCT** list_definition_args;
+    size_t list_definition_args_size;
+
+    // AST_LIST
+    char* list_name;
+    unsigned int list_index;
 
     // AST_STRING
     char* string_value;

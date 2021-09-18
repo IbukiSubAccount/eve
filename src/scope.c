@@ -55,21 +55,22 @@ AST_T* scope_get_function_definition(scope_T* scope, const char* fname)
 
 AST_T* scope_add_variable_definition(scope_T* scope, AST_T* vdef)
 {
+    scope->variable_definitions_size += 1; // increment the size
+
     if (scope->variable_definitions == (void*) 0) // if list is null
     {
         scope->variable_definitions = calloc(1, sizeof(struct AST_STRUCT*)); // allocating memory
-        scope->variable_definitions[0] = vdef; // put the variable definition to the first index of the list
-        scope->variable_definitions_size += 1; // increment the size
     }
     else // if the list already exists
     {
-        scope->variable_definitions_size += 1; // increment the size
-        scope->variable_definitions = realloc( // reallocating the memory
-            scope->variable_definitions,
-            scope->variable_definitions_size * sizeof(struct AST_STRUCT*)
-        );
-        scope->variable_definitions[scope->variable_definitions_size-1] = vdef; // put the node in the end of the list
+        scope->variable_definitions =
+            realloc( // reallocating the memory
+                scope->variable_definitions,
+                scope->variable_definitions_size * sizeof(struct AST_STRUCT*)
+            ); 
     }
+
+    scope->variable_definitions[scope->variable_definitions_size-1] = vdef; // put the node in the end of the list
 
     return vdef;
 }

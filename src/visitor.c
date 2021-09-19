@@ -224,11 +224,18 @@ AST_T* visitor_visit_list(visitor_T* visitor, AST_T* node)
         node->list_name
     );
 
+    AST_T* visited_ast = visitor_visit(visitor, node->list_index);
+    if (visited_ast->type == AST_STRING)
+    {
+        printf("Error: List index should be an integer '%s'\n", visited_ast->string_value);
+        exit(1);
+    }
+
     if (ldef != (void*) 0)
     {
         for (int i = 0; i < ldef->list_definition_args_size; i++)
         {
-            return visitor_visit(visitor, ldef->list_definition_args[node->list_index]);
+            return visitor_visit(visitor, ldef->list_definition_args[visited_ast->int_value]);
         }
     }
 

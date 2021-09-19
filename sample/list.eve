@@ -16,6 +16,5 @@ list Animals [
     "girafe"
 ]:
 
-
 /* call the list */
-eve[Names->4]:
+eve[Names->2]:

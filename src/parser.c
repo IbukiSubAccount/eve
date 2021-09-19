@@ -337,12 +337,8 @@ AST_T* parser_parse_list(parser_T* parser, scope_T* scope)
     parser_eat(parser, TOKEN_MINUS);
     parser_eat(parser, TOKEN_RP);
 
-    // parse the list index
-    char* endPtr;
-    unsigned int list_index = strtoul(parser->current_token->value, &endPtr, 10);
+    AST_T* list_index = parser_parse_expr(parser, scope);
     ast_list->list_index = list_index;
-
-    parser_eat(parser, TOKEN_INT);
 
     ast_list->scope = scope;
 

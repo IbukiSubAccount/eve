@@ -44,7 +44,7 @@ typedef struct AST_STRUCT
 
     // AST_LIST
     char* list_name;
-    unsigned int list_index;
+    struct AST_STRUCT* list_index;
 
     // AST_STRING
     char* string_value;

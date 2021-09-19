@@ -154,19 +154,24 @@ AST_T* parser_parse_function_call(parser_T* parser, scope_T* scope) // return AS
 
 AST_T* parser_parse_variable_definition(parser_T* parser, scope_T* scope)
 {
+    AST_T* ast = init_ast(AST_VARIABLE_DEFINITION); // create ast node that will return
+    
     parser_eat(parser, TOKEN_ID); // expecting v
-    char * variable_definition_variable_name = parser->current_token->value; // saving the variable name
+    char * variable_name = parser->current_token->value;
+    ast->variable_definition_variable_name = calloc(
+        strlen(variable_name) + 1,
+        sizeof(char)
+    );
+    strcpy(ast->variable_definition_variable_name, variable_name); // saving the variable name
+
     parser_eat(parser, TOKEN_ID); // expecting v name
     parser_eat(parser, TOKEN_EQUALS); // expecting equals
     AST_T* variable_definition_value = parser_parse_expr(parser, scope); // expecting value
+    ast->variable_definition_value = variable_definition_value;
 
-    AST_T* variable_definition = init_ast(AST_VARIABLE_DEFINITION); // create ast node that will return
-    variable_definition->variable_definition_variable_name = variable_definition_variable_name;
-    variable_definition->variable_definition_value = variable_definition_value;
+    ast->scope = scope;
 
-    variable_definition->scope = scope;
-
-    return variable_definition;
+    return ast;
 }
 
 AST_T* parser_parse_function_definition(parser_T* parser, scope_T* scope)

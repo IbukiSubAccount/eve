@@ -1,6 +1,6 @@
 /* How to use lists */
 
-list listName = [
+list Names [
     "ibuki",
     "rina",
     "bob",
@@ -8,7 +8,7 @@ list listName = [
     "harry"
 ]:
 
-list animals = [
+list Animals [
     "cat",
     "dog",
     "snake",
@@ -18,4 +18,4 @@ list animals = [
 
 
 /* call the list */
-eve[listName->0]:
+eve[Names->4]:

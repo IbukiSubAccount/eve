@@ -31,7 +31,7 @@ main["Hello", "World"]:
 
 > List
 ```swift
-list Animals = [
+list Animals [
     "dog",
     "cat",
     "penguin",

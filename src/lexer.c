@@ -38,6 +38,12 @@ void lexer_skip_whitespace(lexer_T* lexer) // skip the white space.
     }
 }
 
+void lexer_skip_inline_comment(lexer_T* lexer)
+{
+    while (lexer->c != '\n' && lexer->c != 10 && lexer->c != '\0')
+        lexer_advance(lexer);
+}
+
 void lexer_skip_block_comment(lexer_T* lexer)
 {
     while (1)
@@ -80,6 +86,13 @@ token_T* lexer_get_next_token(lexer_T* lexer) // call this function to get the n
         if (lexer->c == '/')
         {
             lexer_advance(lexer);
+            if (lexer->c == '/')
+            {
+                lexer_advance(lexer);
+                lexer_skip_inline_comment(lexer);
+                continue;
+            }
+            else
             if (lexer->c == '*')
             {
                 lexer_advance(lexer);

@@ -24,21 +24,6 @@ static AST_T* builtin_function_print(visitor_T* visitor, AST_T** args, int args_
     return init_ast(AST_NOOP);
 }
 
-static AST_T* builtin_function_print_list(visitor_T* visitor, AST_T** args, int args_size)
-{
-    for (int i = 0; i < args_size; i++)
-    {
-        AST_T* visited_ast = visitor_visit(visitor, args[i]);
-
-        switch (visited_ast->type)
-        {
-            case AST_STRING: printf("%s\n", visited_ast->string_value); break;
-            default: break;
-        }
-    }
-    return init_ast(AST_NOOP);
-}
-
 static AST_T* builtin_function_sleep(visitor_T* visitor, AST_T** args, int args_size)
 {
     for (int i = 0; i < args_size; i++)

@@ -60,12 +60,13 @@ static AST_T* builtin_function_browser(visitor_T* visitor, AST_T** args, int arg
     for (int i = 0; i < args_size; i++)
     {
         AST_T* visited_ast = visitor_visit(visitor, args[i]);
+        char s[200];
         #if __APPLE__
-            char s[200] = "open ";
+            strcpy(s, "open ");
         #elif _WIN32
-            char s[200] = "start ";
+            strcpy(s, "start ");
         #elif __LINUX__
-            char s[200] = "xdg-open ";
+            strcpy(s, "xdg-open ");
         #else
             printf("Error: Browser function Unexpected OS");
             exit(1);
@@ -73,7 +74,6 @@ static AST_T* builtin_function_browser(visitor_T* visitor, AST_T** args, int arg
 
         char *p = visited_ast->string_value;
         strcat(s, p);
-        printf("%s\n", s);
         switch (visited_ast->type)
         {
             case AST_STRING: system(s); break;

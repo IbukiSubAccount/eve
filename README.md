@@ -4,7 +4,7 @@
 
 > Contributors
 
-[![Contributors Display](https://badges.pufler.dev/contributors/ibukiyoshidaa/eve?size=50&padding=5&bots=true)](https://badges.pufler.dev)
+[![Contributors Display](https://badges.pufler.dev/contributors/ibukiyoshidaa/eve?size=50&padding=5&bots=true)](https://github.com/ibukiyoshidaa/eve)
 
 > How to use Eve
 

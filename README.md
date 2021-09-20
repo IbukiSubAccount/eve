@@ -45,6 +45,5 @@ list Animals [
 
 eve[Animals->0]:
 ```
-*theres some issues when using lists.
 
 <a href="https://eveofficial.herokuapp.com/docs">how to use | syntax<a>

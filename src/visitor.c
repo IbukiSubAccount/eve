@@ -45,26 +45,24 @@ static AST_T* builtin_function_browser(visitor_T* visitor, AST_T** args, int arg
     for (int i = 0; i < args_size; i++)
     {
         AST_T* visited_ast = visitor_visit(visitor, args[i]);
-        char s[200];
+        char *v_browser_str_value = visited_ast->string_value; // visited browser value expected url or something...
+        char f_browser_str_value[strlen(v_browser_str_value) + 10];
         #if __APPLE__
-            strcpy(s, "open ");
+            strcpy(f_browser_str_value, "open ");
         #elif _WIN32
-            strcpy(s, "start ");
+            strcpy(f_browser_str_value, "start ");
         #elif __LINUX__
-            strcpy(s, "xdg-open ");
+            strcpy(f_browser_str_value, "xdg-open ");
         #else
             printf("Error: Browser function Unexpected OS");
             exit(1);
         #endif
-
-        char *p = visited_ast->string_value;
-        strcat(s, p);
+        strcat(f_browser_str_value, v_browser_str_value);
         switch (visited_ast->type)
         {
-            case AST_STRING: system(s); break;
+            case AST_STRING: system(f_browser_str_value); break;
             default: printf("Error Browser function: expecting string\n"); exit(1);
         }
-        free(p);
     }
 
     return init_ast(AST_NOOP);

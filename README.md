@@ -16,6 +16,13 @@ $ sudo make install
 $ eve <filename>.eve
 ```
 
+> Eve Shell
+```
+$ eve
+```
+![My Movie](https://user-images.githubusercontent.com/81926489/134149257-955d107c-cbd7-4d16-8258-a38f495acce9.gif)
+
+
 > Hello World! in Eve
 ```swift
 eve["Hello World!"]:

@@ -26,16 +26,16 @@ int main(int argc, char* argv[])
             if (strcmp(str, "version") == 0)
             {
                 printf("Eve 0.0.1\n");
-                
             }
             else
             {
-            lexer_T* lexer_shell = init_lexer(str);
-            parser_T* parser_shell = init_parser(lexer_shell);
-            AST_T* root_shell = parser_parse(parser_shell, parser_shell->scope);
-            visitor_T* visitor_shell = init_visitor();
-            visitor_visit(visitor_shell, root_shell);
+                lexer_T* lexer_shell = init_lexer(str);
+                parser_T* parser_shell = init_parser(lexer_shell);
+                AST_T* root_shell = parser_parse(parser_shell, parser_shell->scope);
+                visitor_T* visitor_shell = init_visitor();
+                visitor_visit(visitor_shell, root_shell);
             }
+            free(str);
         }
     }
     else

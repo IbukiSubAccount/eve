@@ -92,7 +92,6 @@ AST_T* parser_parse_expr(parser_T* parser, scope_T* scope)
         case TOKEN_STRING: return parser_parse_string(parser, scope);
         case TOKEN_INT: return parser_parse_int(parser, scope);
         case TOKEN_ID: return parser_parse_id(parser, scope);
-        case TOKEN_SEMI: return parser_parse_list(parser, scope);
         default: return 0;
     }
 

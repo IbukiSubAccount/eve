@@ -113,6 +113,7 @@ token_T* lexer_get_next_token(lexer_T* lexer) // call this function to get the n
             case ',': return lexer_advance_with_token(lexer, init_token(TOKEN_COMMA, lexer_get_current_char_as_string(lexer))); break;
             case '>': return lexer_advance_with_token(lexer, init_token(TOKEN_RP, lexer_get_current_char_as_string(lexer))); break;
             case '-': return lexer_advance_with_token(lexer, init_token(TOKEN_MINUS, lexer_get_current_char_as_string(lexer))); break;
+            case '.': return lexer_advance_with_token(lexer, init_token(TOKEN_DOT, lexer_get_current_char_as_string(lexer))); break;
             case '\0': return init_token(TOKEN_EOF, "\0"); break;
             default: printf("SyntaxError: Unexpected '%c' (line %d)\n", lexer->c, lexer->line_n); exit(1); break;
         }

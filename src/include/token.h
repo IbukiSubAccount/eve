@@ -18,6 +18,7 @@ typedef struct TOKEN_STRUCT
         TOKEN_COMMA, // ,
         TOKEN_RP, // >
         TOKEN_MINUS, // -
+        TOKEN_DOT, // .
         TOKEN_EOF
     } type;
 
